@@ -3,9 +3,10 @@ package config
 import (
 	"fmt"
 	"os"
-	"gorm.io/gorm"
-	"gorm.io/driver/postgres"
+
 	"github.com/subosito/gotenv"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 
 	m "hi-story/models"
 )
@@ -37,7 +38,13 @@ func InitMigrate(){
 	DB.AutoMigrate(&m.Museum{})
 	DB.AutoMigrate(&m.Ulasan{})
 
-	admin := &m.User{Nama: "Admin", Email: "admin@gmail.com", Password: "admin123", Role : "Admin"}
+	
 
-	DB.Create(admin)
+	res := DB.Find(&m.User{})
+	if(res.RowsAffected == 0){
+		admin := &m.User{Nama: "Admin", Email: "admin@gmail.com", Password: "admin123", Role : "Admin"}
+		DB.Create(admin)
+	}
+	
+
 }
