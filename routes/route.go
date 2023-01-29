@@ -18,11 +18,5 @@ func New() *echo.Echo{
 	})
 	RegisterUserGroup(e)
 
-	apitest := e.Group("/users-test")
-	apitest.GET("", func(c echo.Context) error {
-		return c.String(http.StatusOK, "test user")
-	})
-
-
 	return e
 }

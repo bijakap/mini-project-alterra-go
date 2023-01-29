@@ -26,11 +26,10 @@ func (s *svcUser) GetAllUsersService() []models.User {
 func (s *svcUser) AuthUser(email, password string) (string, int){
 	if (email == "" || password == ""){
 		return "", http.StatusBadRequest
-	}
-	
-	user, _ := s.repo.GetOneByEmail(email)
+	}	
 
-	if (user != models.User{}){
+	user, err := s.repo.GetOneByEmail(email)
+	if err != nil {
 		return "", http.StatusInternalServerError
 	}
 
