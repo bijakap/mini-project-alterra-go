@@ -28,6 +28,14 @@ func (r *repositoryPostgresLayer) GetAll() []models.User {
 	return users
 }
 
+func (r *repositoryPostgresLayer) GetOneByEmail(email string) (user models.User, err error) {
+	res := r.DB.Where("email = ?", email).Find(&user)
+	if res.RowsAffected < 1 {
+		err = fmt.Errorf("not found")
+	}
+	return
+} 
+
 func NewPostgresRepository(db *gorm.DB) domain.AdapterRepository {
 	return &repositoryPostgresLayer{
 		DB: db,
