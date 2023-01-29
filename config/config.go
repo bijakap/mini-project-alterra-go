@@ -40,8 +40,6 @@ func InitMigrate(){
 	DB.AutoMigrate(&m.Museum{})
 	DB.AutoMigrate(&m.Ulasan{})
 
-	
-
 	res := DB.Find(&m.User{})
 	if(res.RowsAffected == 0){
 		admin := &m.User{Nama: "Admin", Email: "admin@gmail.com", Password: "admin123", Role : "Admin"}

@@ -24,17 +24,20 @@ func (s *svcUser) GetAllUsersService() []models.User {
 }
 
 func (s *svcUser) AuthUser(email, password string) (string, int){
+	if (email == "" || password == ""){
+		return "", http.StatusBadRequest
+	}
+	
 	user, _ := s.repo.GetOneByEmail(email)
 
-
-	if (user.Password != password) || (user != models.User{}){
+	if (user != models.User{}){
 		return "", http.StatusInternalServerError
 	}
 
 	gotenv.Load()
 	token, err := helper.CreateToken(int(user.ID), user.Email, os.Getenv("API_SECRET"))
 	if err != nil {
-		return "", http.StatusInternalServerError
+		return "", http.StatusUnauthorized
 	}
 
 	return token, http.StatusOK
