@@ -30,7 +30,12 @@ func (s *svcUser) AuthUser(email, password string) (string, int){
 
 	user, err := s.repo.GetOneByEmail(email)
 	if err != nil {
+		if (err.Error() == "not found"){
+			return "", http.StatusNotFound
+		}
 		return "", http.StatusInternalServerError
+	} else if user.Password != password {
+		return "", http.StatusBadRequest
 	}
 
 	gotenv.Load()

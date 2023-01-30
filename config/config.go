@@ -42,7 +42,7 @@ func InitMigrate(){
 
 	res := DB.Find(&m.User{})
 	if(res.RowsAffected == 0){
-		admin := &m.User{Nama: "Admin", Email: "admin@gmail.com", Password: "admin123", Role : "Admin"}
+		admin := m.User{Nama: "Admin", Email: "admin@gmail.com", Password: "admin123", Role : "Admin"}
 		DB.Create(admin)
 	}
 	
