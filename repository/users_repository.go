@@ -14,9 +14,8 @@ type repositoryPostgresLayer struct {
 }
 
 func (r *repositoryPostgresLayer) CreateUsers(user models.User) error {
-	res := r.DB.Create(&user)
-	if res.RowsAffected < 1 {
-		return fmt.Errorf("error insert")
+	if result := r.DB.Create(&user); result.Error != nil {
+		return result.Error
 	}
 
 	return nil
@@ -30,9 +29,10 @@ func (r *repositoryPostgresLayer) GetAll() []models.User {
 
 func (r *repositoryPostgresLayer) GetOneByEmail(email string) (user models.User, err error) {
 	res := r.DB.Where("email = ?", email).Find(&user)
-	if res.RowsAffected < 1 {
+	if res.RowsAffected < 1 { 	// custom error message
 		err = fmt.Errorf("not found")
 	}
+	
 	return
 } 
 

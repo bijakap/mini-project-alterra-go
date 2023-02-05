@@ -31,22 +31,6 @@ func RegisterUserGroup(e *echo.Echo) {
 	})
 	e.POST("/auth", cont.AuthUserController)
 	e.POST("/create", cont.CreateUserController)
-	e.GET("/testall", cont.GetAllUsersController)
-	
-	
-
-	// apiUser.GET("", cont.GetAllUsersController, middleware.JWTWithConfig(
-	// 	middleware.JWTConfig{
-	// 		SigningKey: []byte(os.Getenv("API_SECRET")),
-	// 		ErrorHandlerWithContext: func(err error, c echo.Context) error {
-	// 			return c.JSONPretty(404, map[string]interface{}{
-	// 				"messages": "token invalid",
-	// 			}, "  ")
-	// 		},
-	// 		SuccessHandler: func(c echo.Context) {
-	// 		},
-	// 	},
-	// ))
-	// apiUser.POST("", cont.CreateUserController)
+	apiUser.GET("", cont.GetAllUsersController)
 
 }
