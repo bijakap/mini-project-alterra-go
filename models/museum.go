@@ -10,5 +10,6 @@ type Museum struct {
 	Jadwal string `gorm:"not null"`
 	Kontak string `gorm:"not null"`
 	Gambar string `gorm:"not null"`
-	Ulasan []Ulasan `gorm:"Foreignkey:Id_museum;association_foreignkey:ID"`
+	// Ablum []Ablum `gorm:"foreignKey:Id_museum"`
+	// Ulasan []Ulasan `gorm:"foreignKey:Id_museum"`
 }

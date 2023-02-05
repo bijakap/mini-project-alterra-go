@@ -36,15 +36,11 @@ func InitDB() *gorm.DB {
 }
 
 func InitMigrate(){
-	DB.AutoMigrate(&m.User{})
-	DB.AutoMigrate(&m.Museum{})
-	DB.AutoMigrate(&m.Ulasan{})
-
-	res := DB.Find(&m.User{})
-	if(res.RowsAffected == 0){
-		admin := m.User{Nama: "Admin", Email: "admin@gmail.com", Password: "admin123", Role : "Admin"}
+	DB.AutoMigrate(&m.User{}, &m.Museum{}, &m.Ulasan{}, &m.Ablum{})
+	
+	if res := DB.Find(&m.User{}); res.RowsAffected == 0 {
+		admin := &m.User{Nama: "Admin", Email: "admin@gmail.com", Password: "admin123", Role : "Admin"}
 		DB.Create(admin)
 	}
-	
 
 }
