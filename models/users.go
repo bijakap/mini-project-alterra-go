@@ -10,6 +10,6 @@ type User struct {
 	Nama string `gorm:"not null" json:"nama" form:"nama" `
 	Profile_pic *string `json:"profile_pic" form:"profile_pic" `
 	Remember_me *string `json:"remember_me" form:"remember_me" `
-	Ulasan []Ulasan `gorm:"foreignKey:Id_User"`
+	Ulasan []Ulasan `gorm:"foreignKey:Id_User;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 

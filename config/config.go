@@ -27,7 +27,9 @@ func InitDB() *gorm.DB {
 	)
 
 	var err error
-	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+		DisableForeignKeyConstraintWhenMigrating: true,
+	})
 	if err != nil {
 		panic(err.Error())
 	}
@@ -41,6 +43,18 @@ func InitMigrate(){
 	if res := DB.Find(&m.User{}); res.RowsAffected == 0 {
 		admin := &m.User{Nama: "Admin", Email: "admin@gmail.com", Password: "admin123", Role : "Admin"}
 		DB.Create(admin)
+		firstUser := &m.User{Nama: "Bijak Algifan Putra", Email: "bijak.algifan.p@gmail.com", Password: "qwerty123"}
+		DB.Create(firstUser)
+	}
+
+	if resMuseum := DB.Find(&m.Museum{}); resMuseum.RowsAffected == 0{
+		museum := &m.Museum{Nama: "Konferensi Asia Afrika", Deskripsi: "Ini Test", Alamat: "Jln Asia Afrika"}
+		DB.Create(museum)
+	}
+
+	if resUlasan := DB.Find(&m.Ulasan{}); resUlasan.RowsAffected == 0 {
+		ulasan := &m.Ulasan{Ulasan: "test ulasan", Id_User: 2, Id_museum: 1}
+		DB.Create(ulasan)
 	}
 
 }

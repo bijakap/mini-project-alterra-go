@@ -24,3 +24,11 @@ type AdapterService interface {
 	AuthUser(email, password string) (string, int)
 	// DeleteByID(id int) error
 }
+
+type AdapterRepositoryUlasan interface {
+
+}
+
+type AdapterServiceUlasan interface {
+	
+}
