@@ -20,6 +20,7 @@ func New() *echo.Echo{
 		return c.String(http.StatusOK, "Hello World")
 	})
 	RegisterUserGroup(e)
+	RegisterUlasanGroup(e)
 
 	return e
 }

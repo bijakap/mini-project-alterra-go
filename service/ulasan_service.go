@@ -10,11 +10,11 @@ type svcUlasan struct {
 }
 
 func (s *svcUlasan) CreateUlasanService(id_user, id_museum int, ulasan, image string) error {
-	return nil
+	return s.repo.CreateUlasan(id_user, id_museum, ulasan, image)
 }
 
 func (s *svcUlasan) GetUlasanByIdMuseumService(id_museum int) []models.Ulasan {
-	return nil
+	return s.repo.GetUlasanByIdMuseum(id_museum)
 }
 
 func NewServiceUlasan(repo domain.AdapterRepositoryUlasan) domain.AdapterServiceUlasan {
