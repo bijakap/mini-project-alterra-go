@@ -13,7 +13,7 @@ func (s *svcUlasan) CreateUlasanService(id_user, id_museum int, ulasan, image st
 	return nil
 }
 
-func (s *svcUlasan) GetUlasanByIdMuseumService() []models.Ulasan {
+func (s *svcUlasan) GetUlasanByIdMuseumService(id_museum int) []models.Ulasan {
 	return nil
 }
 

@@ -34,5 +34,5 @@ type AdapterRepositoryUlasan interface {
 type AdapterServiceUlasan interface {
 	//untuk Ulasan
 	CreateUlasanService(id_user, id_museum int, ulasan, image string) error
-	GetUlasanByIdMuseumService() []models.Ulasan
+	GetUlasanByIdMuseumService(id_museum int) []models.Ulasan
 }
