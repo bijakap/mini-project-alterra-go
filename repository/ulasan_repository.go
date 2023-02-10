@@ -12,10 +12,11 @@ type repositoryPostgresLayerUlasan struct {
 }
 
 func (r *repositoryPostgresLayerUlasan) CreateUlasan(id_user, id_museum int, ulasan, image string) error {
-	Ulasan := models.Ulasan{Ulasan: ulasan, Id_User: id_user, Id_museum: id_museum, Img : image}
+	Ulasan := &models.Ulasan{Ulasan: ulasan, Id_User: id_user, Id_museum: id_museum, Img: image}
 	if result := r.DB.Create(Ulasan); result.Error != nil {
 		return result.Error
 	}
+	// fmt.Println(Ulasan)
 	return nil
 }
 

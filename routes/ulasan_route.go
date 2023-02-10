@@ -18,7 +18,7 @@ func RegisterUlasanGroup(e *echo.Echo){
 
 	apiUlasan := e.Group("/ulasan", middleware.Logger())
 
-	apiUlasan.GET("", cont.GetUlasanByIdMuseumController)
+	apiUlasan.GET("/:id", cont.GetUlasanByIdMuseumController)
 	apiUlasan.POST("", cont.CreateUlasanController)
 	
 }
