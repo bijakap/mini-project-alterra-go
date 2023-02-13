@@ -16,6 +16,11 @@ type EchoControllerUlasan struct {
 
 func (ec *EchoControllerUlasan) GetUlasanByIdMuseumController(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
+	
+	if id == 0 {
+		return c.String(http.StatusBadRequest, "Kesalahan dalam id")
+	}
+	
 	message := fmt.Sprintf("Test API Ulasan GetUlasanByIDMuseum %d", id)
 	ulasan := ec.Svc.GetUlasanByIdMuseumService(id)
 
@@ -26,16 +31,22 @@ func (ec *EchoControllerUlasan) GetUlasanByIdMuseumController(c echo.Context) er
 }
 
 func (ec *EchoControllerUlasan) CreateUlasanController(c echo.Context) error {
-	text, image,id_user,id_museum := c.QueryParam("ulasan"), c.QueryParam("gambar"), c.QueryParam("id_user"), c.QueryParam("id_museum")
+	// text, image := c.QueryParam("ulasan"), c.QueryParam("gambar")
+	// id_user, _ := strconv.Atoi(c.QueryParam("id_user"))
+	// id_museum, _ := strconv.Atoi(c.QueryParam("id_museum"))
 
 	ulasan := models.Ulasan{}
 	c.Bind(&ulasan)
 
-	if c.QueryParam("ulasan") == ""{
-		return c.String(http.StatusBadRequest, "Ulasan Kosong")
-	}
+	// if c.QueryParam("ulasan") == "" &&  ulasan.Ulasan == ""{
+	// 	return c.String(http.StatusBadRequest, "Ulasan Kosong")
+	// }
 
-	err := ec.Svc.CreateUlasanService(2,1,text,image)
+	if ulasan.Ulasan == "" || ulasan.Id_User == 0 || ulasan.Id_museum == 0{
+		return c.String(http.StatusBadRequest, "Ulasan Kosong atau terdapat kesalahan")
+	}
+	
+	err := ec.Svc.CreateUlasanService(ulasan.Id_User,ulasan.Id_museum,ulasan.Ulasan,ulasan.Img)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message" : err.Error(),
@@ -43,10 +54,7 @@ func (ec *EchoControllerUlasan) CreateUlasanController(c echo.Context) error {
 	}
 	
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"text" : text,
-		"image" : image,
-		"param_id_user" : id_user,
-		"param_id_museum" : id_museum,
+		"message" : "Ulasan Telah ditambahkan",
 		"ulasan" : ulasan,
 	})
 }

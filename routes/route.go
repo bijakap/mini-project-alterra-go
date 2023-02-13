@@ -21,6 +21,7 @@ func New() *echo.Echo{
 	})
 	RegisterUserGroup(e)
 	RegisterUlasanGroup(e)
+	RegisterMuseumGroup(e)
 
 	return e
 }

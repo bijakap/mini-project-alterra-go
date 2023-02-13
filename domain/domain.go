@@ -36,3 +36,13 @@ type AdapterServiceUlasan interface {
 	CreateUlasanService(id_user, id_museum int, ulasan, image string) error
 	GetUlasanByIdMuseumService(id_museum int) []models.Ulasan
 }
+
+type AdapterRepositoryMuseum interface {
+	CreateMuseum(museum models.Museum) error
+	GetMuseumById(id int) models.Museum
+}
+
+type AdapterServiceMuseum interface {
+	CreateMuseumService(museum models.Museum) error
+	GetMuseumByIdService(id int) models.Museum
+}
