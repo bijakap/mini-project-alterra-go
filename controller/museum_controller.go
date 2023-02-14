@@ -16,14 +16,18 @@ type EchoControlleMuseum struct {
 
 func (ec *EchoControlleMuseum) CreateMuseumController(c echo.Context) error {
 	museum := models.Museum{}
-	c.Bind(museum)
+	c.Bind(&museum)
 
 	err := ec.Svc.CreateMuseumService(museum)
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "museum error")
 	}
 
-	return c.String(http.StatusOK, "create museum")
+	// return c.String(http.StatusOK, "create museum")
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message" : "create museum",
+		"data" : museum,
+	})
 }
 
 func (ec *EchoControlleMuseum) GetMuseumByIdController(c echo.Context) error {
