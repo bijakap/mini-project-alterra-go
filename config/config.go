@@ -28,7 +28,7 @@ func InitDB() *gorm.DB {
 
 	var err error
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
-		DisableForeignKeyConstraintWhenMigrating: true,
+		// DisableForeignKeyConstraintWhenMigrating: true,
 	})
 	if err != nil {
 		panic(err.Error())
@@ -48,7 +48,16 @@ func InitMigrate(){
 	}
 
 	if resMuseum := DB.Find(&m.Museum{}); resMuseum.RowsAffected == 0{
-		museum := &m.Museum{Nama: "Konferensi Asia Afrika", Deskripsi: "Ini Test", Alamat: "Jln Asia Afrika"}
+		// museum := &m.Museum{Nama: "Konferensi Asia Afrika", Deskripsi: "Ini Test", Alamat: "Jln Asia Afrika"}
+		museum := &m.Museum{}
+		Nama := "Konferensi Asia Afrika"
+		Deskripsi := "Konferensi Asia Afrika"
+		Alamat := "Jln Asia Afrika"
+
+		museum.Nama = &Nama
+		museum.Deskripsi = &Deskripsi
+		museum.Alamat = &Alamat
+
 		DB.Create(museum)
 	}
 

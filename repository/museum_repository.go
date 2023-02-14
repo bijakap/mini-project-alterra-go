@@ -12,11 +12,17 @@ type repositoryPostgresLayerMuseum struct {
 }
 
 func (r *repositoryPostgresLayerMuseum) CreateMuseum(museum models.Museum) error {
+	if result := r.DB.Create(&museum); result.Error != nil {
+		return result.Error
+	}
+
 	return nil
 }
 
 func (r *repositoryPostgresLayerMuseum) GetMuseumById(id int) models.Museum {
-	return models.Museum{}
+	museum := models.Museum{}
+	r.DB.Where("id = ?", id).Find(&museum)
+	return museum
 }
 
 func NewRepositoryPostgresLayerMuseum(db *gorm.DB) domain.AdapterRepositoryMuseum {
