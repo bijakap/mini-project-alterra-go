@@ -8,6 +8,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
+	con "hi-story/constants"
 	m "hi-story/models"
 )
 
@@ -41,7 +42,11 @@ func InitMigrate(){
 	DB.AutoMigrate(&m.User{}, &m.Museum{}, &m.Ulasan{}, &m.Ablum{})
 	
 	if res := DB.Find(&m.User{}); res.RowsAffected == 0 {
+		profile_image := con.DEFAULT_PROFILE_PIC
+
 		admin := &m.User{Nama: "Admin", Email: "admin@gmail.com", Password: "admin123", Role : "Admin"}
+		admin.Profile_pic = &profile_image
+
 		DB.Create(admin)
 		firstUser := &m.User{Nama: "Bijak Algifan Putra", Email: "bijak.algifan.p@gmail.com", Password: "qwerty123"}
 		DB.Create(firstUser)
@@ -53,17 +58,35 @@ func InitMigrate(){
 		Nama := "Konferensi Asia Afrika"
 		Deskripsi := "Konferensi Asia Afrika"
 		Alamat := "Jln Asia Afrika"
+		default_image := con.DEFAULT_IMAGE
 
 		museum.Nama = &Nama
 		museum.Deskripsi = &Deskripsi
 		museum.Alamat = &Alamat
+		museum.Gambar = &default_image
 
 		DB.Create(museum)
-	}
+		Nama = "KAA kedua"
+		museum.ID = 2
+		DB.Create(museum)
+ 	}
 
 	if resUlasan := DB.Find(&m.Ulasan{}); resUlasan.RowsAffected == 0 {
 		ulasan := &m.Ulasan{Ulasan: "test ulasan", Id_User: 2, Id_museum: 1}
 		DB.Create(ulasan)
+	}
+
+	if resAlbum := DB.Find(&m.Ablum{}); resAlbum.RowsAffected == 0 {
+		default_image := con.DEFAULT_IMAGE
+		album1 := &m.Ablum{Id_museum: 1}
+		album2 := &m.Ablum{Id_museum: 1}
+		album3 := &m.Ablum{Id_museum: 2}
+		album1.Img = &default_image
+		album2.Img = &default_image 
+		album3.Img = &default_image
+		DB.Create(album1)
+		DB.Create(album2)
+		DB.Create(album3)
 	}
 
 }

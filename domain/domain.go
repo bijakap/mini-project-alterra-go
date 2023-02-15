@@ -21,7 +21,7 @@ type AdapterService interface {
 	// UpdateUserService(id, idToken int, user model.User) error
 	GetAllUsersService() []models.User
 	// GetUserByID(id int) (model.User, error)
-	AuthUser(email, password string) (string, int)
+	AuthUser(email, password string) (string, int, models.User)
 	// DeleteByID(id int) error
 }
 

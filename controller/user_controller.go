@@ -58,9 +58,9 @@ func (ec *EchoController) AuthUserController(c echo.Context) error {
 
 	token, statusCode := "", 400
 	if (user.Email != "" && user.Password != ""){
-		token, statusCode = ec.Svc.AuthUser(user.Email, user.Password)
+		token, statusCode, user = ec.Svc.AuthUser(user.Email, user.Password)
 	} else if (c.QueryParam("email") != "" && c.QueryParam("password") != ""){
-		token, statusCode = ec.Svc.AuthUser(c.QueryParam("email"), c.QueryParam("password"))
+		token, statusCode, user = ec.Svc.AuthUser(c.QueryParam("email"), c.QueryParam("password"))
 	} else {
 		return c.JSONPretty(http.StatusBadRequest, map[string]interface{}{
 			"Message" : "400 - Bad Request",
@@ -86,9 +86,16 @@ func (ec *EchoController) AuthUserController(c echo.Context) error {
 		}, " ")
 	}
 
+	userRespone := map[string]interface{}{
+		"nama" : user.Nama,
+		"email" : user.Email,
+		"profile_image" : user.Profile_pic,
+	}
+
 	return c.JSONPretty(http.StatusOK, map[string]interface{}{
 		"message" : "Success",
 		"token" : token,
+		"data" : userRespone,
 	}, " ")
 }
 

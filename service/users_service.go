@@ -23,28 +23,28 @@ func (s *svcUser) GetAllUsersService() []models.User {
 	return s.repo.GetAll()
 }
 
-func (s *svcUser) AuthUser(email, password string) (string, int){
+func (s *svcUser) AuthUser(email, password string) (string, int, models.User){
 	if (email == "" || password == ""){
-		return "", http.StatusBadRequest
+		return "", http.StatusBadRequest, models.User{}
 	}	
 
 	user, err := s.repo.GetOneByEmail(email)
 	if err != nil {
 		if (err.Error() == "not found"){
-			return "", http.StatusNotFound
+			return "", http.StatusNotFound, user
 		}
-		return "", http.StatusInternalServerError
+		return "", http.StatusInternalServerError, user
 	} else if user.Password != password {
-		return "", http.StatusBadRequest
+		return "", http.StatusBadRequest, user
 	}
 
 	gotenv.Load()
 	token, err := helper.CreateToken(int(user.ID), user.Email, os.Getenv("API_SECRET"))
 	if err != nil {
-		return "", http.StatusUnauthorized
+		return "", http.StatusUnauthorized, user
 	}
 
-	return token, http.StatusOK
+	return token, http.StatusOK, user
 }
 
 func NewServiceUser(repo domain.AdapterRepository) domain.AdapterService {
