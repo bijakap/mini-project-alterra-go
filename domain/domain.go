@@ -48,9 +48,11 @@ type AdapterServiceMuseum interface {
 }
 
 type AdapterRepositoryAlbum interface {
-	
+	CreateAlbum(album models.Album) error
+	GetAlbumByIdMuseum(id int) []models.Album
 }
 
 type AdapterServiceAlbum interface {
-
+	CreateAlbumService(album models.Album) error
+	GetAlbumByIdMuseumService(id int) []models.Album
 }
