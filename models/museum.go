@@ -10,6 +10,6 @@ type Museum struct {
 	Jadwal *string `query:"jadwal" param:"jadwal" json:"jadwal" form:"jadwal"`
 	Kontak *string `query:"kontak" param:"kontak" json:"kontak" form:"kontak"`
 	Gambar *string `query:"image" param:"image" json:"image" form:"image"`
-	Ablum []Ablum `gorm:"foreignKey:Id_museum;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Album []Album `gorm:"foreignKey:Id_museum;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	Ulasan []Ulasan `gorm:"foreignKey:Id_museum;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }

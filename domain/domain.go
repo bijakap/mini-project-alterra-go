@@ -46,3 +46,11 @@ type AdapterServiceMuseum interface {
 	CreateMuseumService(museum models.Museum) error
 	GetMuseumByIdService(id int) models.Museum
 }
+
+type AdapterRepositoryAlbum interface {
+	
+}
+
+type AdapterServiceAlbum interface {
+
+}

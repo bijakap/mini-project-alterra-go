@@ -39,7 +39,7 @@ func InitDB() *gorm.DB {
 }
 
 func InitMigrate(){
-	DB.AutoMigrate(&m.User{}, &m.Museum{}, &m.Ulasan{}, &m.Ablum{})
+	DB.AutoMigrate(&m.User{}, &m.Museum{}, &m.Ulasan{}, &m.Album{})
 	
 	if res := DB.Find(&m.User{}); res.RowsAffected == 0 {
 		profile_image := con.DEFAULT_PROFILE_PIC
@@ -76,11 +76,11 @@ func InitMigrate(){
 		DB.Create(ulasan)
 	}
 
-	if resAlbum := DB.Find(&m.Ablum{}); resAlbum.RowsAffected == 0 {
+	if resAlbum := DB.Find(&m.Album{}); resAlbum.RowsAffected == 0 {
 		default_image := con.DEFAULT_IMAGE
-		album1 := &m.Ablum{Id_museum: 1}
-		album2 := &m.Ablum{Id_museum: 1}
-		album3 := &m.Ablum{Id_museum: 2}
+		album1 := &m.Album{Id_museum: 1}
+		album2 := &m.Album{Id_museum: 1}
+		album3 := &m.Album{Id_museum: 2}
 		album1.Img = &default_image
 		album2.Img = &default_image 
 		album3.Img = &default_image
